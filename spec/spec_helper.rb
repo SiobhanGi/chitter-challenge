@@ -1,5 +1,12 @@
 require 'simplecov'
 require 'simplecov-console'
+require 'capybara/rspec'
+require 'rspec'
+require 'database_cleaner'
+
+require File.join(File.dirname(__FILE__), '..', 'app.rb')
+
+Capybara.app = Chitter
 
 SimpleCov.formatter = SimpleCov::Formatter::MultiFormatter.new([
   SimpleCov::Formatter::Console,
@@ -14,4 +21,18 @@ RSpec.configure do |config|
     puts "\e[33mHave you considered running rubocop? It will help you improve your code!\e[0m"
     puts "\e[33mTry it now! Just run: rubocop\e[0m"
   end
+
+  config.before(:suite) do
+    DatabaseCleaner.stragety = :transaction
+    DatabaseCleaner.clean_with :deletion
+  end
+
+  config.before(:all) do
+    DatabaseCleaner.start
+  end
+
+  config.before(:all) do
+    DatabaseCleaner.clean
+  end
+
 end
