@@ -4,6 +4,8 @@ require 'capybara/rspec'
 require 'rspec'
 require 'database_cleaner'
 
+ENV['RACK_ENV'] = 'test'
+
 require File.join(File.dirname(__FILE__), '..', 'app.rb')
 
 Capybara.app = Chitter
@@ -22,17 +24,19 @@ RSpec.configure do |config|
     puts "\e[33mTry it now! Just run: rubocop\e[0m"
   end
 
-  config.before(:suite) do
-    DatabaseCleaner.stragety = :transaction
-    DatabaseCleaner.clean_with :deletion
+  config.before(:each) do
+    DataMapper.auto_migrate!
+    # DatabaseCleaner.strategy = :transaction
+    # DatabaseCleaner.clean_with(:truncation)
   end
-
-  config.before(:all) do
-    DatabaseCleaner.start
-  end
-
-  config.before(:all) do
-    DatabaseCleaner.clean
-  end
-
+#
+#   config.before(:all) do
+#
+#     DatabaseCleaner.start
+#   end
+#
+#   config.before(:all) do
+#     DatabaseCleaner.clean
+#   end
+#
 end
