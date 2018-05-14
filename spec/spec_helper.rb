@@ -1,10 +1,12 @@
+ENV['RACK_ENV'] = 'test'
 require 'simplecov'
 require 'simplecov-console'
+require 'capybara'
 require 'capybara/rspec'
 require 'rspec'
 require 'database_cleaner'
-
-ENV['RACK_ENV'] = 'test'
+require './lib/user.rb'
+require_relative './features/web_helpers'
 
 require File.join(File.dirname(__FILE__), '..', 'app.rb')
 
@@ -24,19 +26,8 @@ RSpec.configure do |config|
     puts "\e[33mTry it now! Just run: rubocop\e[0m"
   end
 
-  config.before(:each) do
+  config.before(:all) do
     DataMapper.auto_migrate!
-    # DatabaseCleaner.strategy = :transaction
-    # DatabaseCleaner.clean_with(:truncation)
   end
-#
-#   config.before(:all) do
-#
-#     DatabaseCleaner.start
-#   end
-#
-#   config.before(:all) do
-#     DatabaseCleaner.clean
-#   end
-#
+
 end

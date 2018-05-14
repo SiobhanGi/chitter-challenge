@@ -1,4 +1,4 @@
-class Peep
+class Comment
   include DataMapper::Resource
 
   property :id,           Serial
@@ -6,7 +6,7 @@ class Peep
   property :posted_at,    DateTime
   property :posted_by,    String
 
-  belongs_to :peeps
+  belongs_to :peep
   belongs_to :user
 
 end

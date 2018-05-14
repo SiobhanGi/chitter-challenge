@@ -3,12 +3,13 @@ source 'https://rubygems.org'
 ruby '2.5.0'
 
 gem 'rake'
+gem 'rack'
 gem 'rubocop'
 gem 'data_mapper', '~> 1.2'
-gem 'pg'
 gem 'bcrypt'
+gem 'pg'
 gem 'dm-postgres-adapter'
-gem 'haml'
+gem 'sinatra'
 gem 'sinatra-flash'
 
 
